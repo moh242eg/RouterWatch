@@ -1,7 +1,12 @@
 {
+  "latest_version": "1.0.0",
   "app_name": "RouterWatch Professional",
-  "latest_version": "1.1.0",
+  "release_date": "2026-04-18",
   "download_url": "https://routerwatch.online/download",
-  "changelog": "- الإطلاق الرسمي لمنصة RouterWatch.\n- دعم فحص الأجهزة المتصلة.\n- ميزة حفظ الباسورد وإدارة قواعد الحظر."
+  "changelog": [
+    "الإطلاق الرسمي للمنصة عبر نطاق RouterWatch.online",
+    "تفعيل نظام التحديثات التلقائي لضمان استقرار الخدمة"
+  ],
+  "is_critical": false,
   "required": true
 }
