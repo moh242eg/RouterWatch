@@ -3,4 +3,5 @@
   "latest_version": "1.1.0",
   "download_url": "https://routerwatch.online/download",
   "changelog": "- الإطلاق الرسمي لمنصة RouterWatch.\n- دعم فحص الأجهزة المتصلة.\n- ميزة حفظ الباسورد وإدارة قواعد الحظر."
+  "required": true
 }
