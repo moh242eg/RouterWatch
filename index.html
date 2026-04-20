@@ -63,9 +63,10 @@
     <div class="container">
         <div class="logo">🛡️ Router<span>Watch</span></div>
         <h1>تحميل برنامج حماية الشبكة</h1>
-        <div class="version-badge">الإصدار الأحدث: v1.0.0</div>
         
-        <a href="https://github.com/moh242eg/RouterWatch/releases/latest/download/RouterWatch_Pro.zip" class="btn-download">تحميل للويندوز (64-bit)</a>
+        <div id="version-text" class="version-badge">جاري جلب أحدث إصدار...</div>
+        
+        <a href="#" id="download-btn" class="btn-download">تحميل للويندوز (64-bit)</a>
         
         <div class="features">
             <p>✅ تنظيم وقت الإنترنت للأبناء</p>
@@ -74,5 +75,35 @@
         </div>
         <p style="font-size: 0.7rem; margin-top: 20px; color: #999;">© 2026 RouterWatch.online</p>
     </div>
+
+    <script>
+        // الكود اللي بيخلي التحميل "ديناميكي"
+        async function updateDownloadLink() {
+            const user = 'moh242eg';
+            const repo = 'RouterWatch';
+            const apiUrl = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.assets && data.assets.length > 0) {
+                    const downloadUrl = data.assets[0].browser_download_url;
+                    const versionName = data.tag_name;
+
+                    // تحديث الزرار
+                    document.getElementById('download-btn').href = downloadUrl;
+                    // تحديث رقم الإصدار المكتوب
+                    document.getElementById('version-text').innerText = "الإصدار الأحدث: " + versionName;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('version-text').innerText = "خطأ في جلب البيانات";
+            }
+        }
+
+        // تشغيل الدالة بمجرد فتح الصفحة
+        updateDownloadLink();
+    </script>
 </body>
 </html>
