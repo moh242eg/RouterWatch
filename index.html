@@ -34,7 +34,14 @@
             border-radius: 20px;
             font-size: 0.9rem;
             display: inline-block;
+            margin-bottom: 10px;
+        }
+        #download-count {
+            font-size: 0.85rem;
+            color: #27ae60;
             margin-bottom: 20px;
+            font-weight: bold;
+            display: block;
         }
         .btn-download {
             background: #3498db;
@@ -60,9 +67,11 @@
         <div class="logo">🛡️ Router<span>Watch</span></div>
         <h1>تحميل برنامج حماية الشبكة</h1>
         
-        <div id="version-text" class="version-badge">جاري التحقق من أحدث نسخة...</div>
+        <div id="version-text" class="version-badge">جاري التحقق...</div>
         
-        <a href="https://github.com/moh242eg/RouterWatch/releases" id="download-btn" class="btn-download">انقر للتحميل (Windows)</a>
+        <div id="download-count">جاري حساب التحميلات...</div>
+        
+        <a href="https://github.com/moh242eg/RouterWatch/releases" id="download-btn" class="btn-download">تحميل للويندوز (64-bit)</a>
         
         <div class="features">
             <p>✅ تنظيم وقت الإنترنت للأبناء</p>
@@ -71,83 +80,39 @@
         </div>
         <p style="font-size: 0.7rem; margin-top: 20px; color: #999;">© 2026 RouterWatch.online</p>
     </div>
-<div id="download-count" style="font-size: 0.8rem; color: #27ae60; margin-bottom: 15px; font-weight: bold;">
-    جاري حساب التحميلات...
-</div>
 
-<script>
-    async function updateDownloadLink() {
-        const user = 'moh242eg';
-        const repo = 'RouterWatch';
-        const apiUrl = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
-
-        try {
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            if (data.assets && data.assets.length > 0) {
-                // 1. جلب رابط التحميل
-                const asset = data.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || data.assets[0];
-                const downloadUrl = asset.browser_download_url;
-                const versionName = data.tag_name;
-                
-                // 2. حساب إجمالي التحميلات لكل الملفات في هذا الإصدار
-                let totalDownloads = 0;
-                data.assets.forEach(a => {
-                    totalDownloads += a.download_count;
-                });
-
-                // تحديث العناصر في الصفحة
-                document.getElementById('download-btn').href = downloadUrl;
-                document.getElementById('version-text').innerText = "الإصدار الحالي: " + versionName;
-                
-                // إظهار عدد التحميلات بشكل شيك
-                document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${totalDownloads}</span> مرة حتى الآن`;
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('version-text').innerText = "استخدم الرابط المباشر";
-            document.getElementById('download-count').innerText = "";
-        }
-    }
-
-    updateDownloadLink();
-</script>
     <script>
-        async function updateDownloadLink() {
+        async function updateDownloadInfo() {
             const user = 'moh242eg';
             const repo = 'RouterWatch';
-            // الرابط ده بيجيب معلومات آخر إصدار
             const apiUrl = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
 
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('Network response was not ok');
-                
+                if (!response.ok) throw new Error('Not Found');
                 const data = await response.json();
 
                 if (data.assets && data.assets.length > 0) {
-                    // بياخد أول ملف بصيغة zip أو exe
+                    // 1. تحديث الرابط (أول ملف zip أو exe)
                     const asset = data.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || data.assets[0];
-                    const downloadUrl = asset.browser_download_url;
-                    const versionName = data.tag_name;
-
-                    document.getElementById('download-btn').href = downloadUrl;
-                    document.getElementById('version-text').innerText = "الإصدار الحالي: " + versionName;
-                } else {
-                    // لو مفيش ملفات مرفوعة، يوديه لصفحة الـ Releases
-                    document.getElementById('download-btn').href = `https://github.com/${user}/${repo}/releases`;
-                    document.getElementById('version-text').innerText = "اطلع على قائمة الإصدارات";
+                    document.getElementById('download-btn').href = asset.browser_download_url;
+                    
+                    // 2. تحديث رقم الإصدار
+                    document.getElementById('version-text').innerText = "الإصدار الحالي: " + data.tag_name;
+                    
+                    // 3. حساب وإظهار إجمالي التحميلات
+                    let totalDownloads = 0;
+                    data.assets.forEach(a => totalDownloads += a.download_count);
+                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${totalDownloads}</span> مرة حتى الآن`;
                 }
             } catch (error) {
-                console.error('Fetch error:', error);
-                document.getElementById('version-text').innerText = "استخدم الرابط المباشر للتحميل";
-                // رابط طوارئ لصفحة الإصدارات
-                document.getElementById('download-btn').href = `https://github.com/${user}/${repo}/releases`;
+                console.error('Error:', error);
+                document.getElementById('version-text').innerText = "استخدم الرابط المباشر";
+                document.getElementById('download-count').style.display = "none";
             }
         }
 
-        updateDownloadLink();
+        updateDownloadInfo();
     </script>
 </body>
 </html>
