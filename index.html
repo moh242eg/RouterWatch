@@ -27,7 +27,6 @@
         .logo { font-size: 2.8rem; color: #2c3e50; margin-bottom: 10px; }
         .logo span { color: #3498db; }
         h1 { font-size: 1.6rem; margin-bottom: 15px; color: #2c3e50; }
-        
         .version-badge {
             background: #e8f4fd;
             color: #3498db;
@@ -38,16 +37,13 @@
             margin-bottom: 8px;
             font-weight: 600;
         }
-
-        /* تنسيق عداد التحميلات */
         #download-count {
-            font-size: 0.9rem;
-            color: #27ae60; /* لون أخضر مريح للعين */
+            font-size: 0.95rem;
+            color: #27ae60;
             margin-bottom: 25px;
             font-weight: bold;
             display: block;
         }
-
         .btn-download {
             background: #3498db;
             color: white;
@@ -65,7 +61,6 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
         }
-        
         .features {
             text-align: right;
             margin-top: 30px;
@@ -74,7 +69,6 @@
             font-size: 0.9rem;
             color: #555;
         }
-        .features p { margin: 8px 0; }
     </style>
 </head>
 <body>
@@ -82,61 +76,52 @@
     <div class="container">
         <div class="logo">🛡️ Router<span>Watch</span></div>
         <h1>تحميل برنامج حماية الشبكة</h1>
-        
         <div id="version-text" class="version-badge">جاري التحقق...</div>
-        
-        <div id="download-count">جاري حساب التحميلات...</div>
-        
+        <div id="download-count">حساب إجمالي التحميلات...</div>
         <a href="https://github.com/moh242eg/RouterWatch/releases" id="download-btn" class="btn-download">تحميل للويندوز (64-bit)</a>
-        
         <div class="features">
             <p>✅ تنظيم وقت الإنترنت للأبناء</p>
             <p>✅ كشف الأجهزة الغريبة والمتصلة</p>
             <p>✅ حماية خصوصية بيانات الراوتر</p>
         </div>
-        
         <p style="font-size: 0.75rem; margin-top: 25px; color: #aaa;">© 2026 RouterWatch.online</p>
     </div>
 
-   <script>
-    async function getGitHubData() {
-        const user = 'moh242eg';
-        const repo = 'RouterWatch';
-        // الرابط ده بيجيب كل الإصدارات عشان نجمع التحميلات
-        const allReleasesUrl = `https://api.github.com/repos/${user}/${repo}/releases`;
+    <script>
+        async function fetchGitHubStats() {
+            const user = 'moh242eg';
+            const repo = 'RouterWatch';
+            const url = `https://api.github.com/repos/${user}/${repo}/releases`;
 
-        try {
-            const response = await fetch(allReleasesUrl);
-            if (!response.ok) throw new Error('Releases not found');
-            const releases = await response.json();
+            try {
+                const response = await fetch(url);
+                const releases = await response.json();
 
-            if (releases.length > 0) {
-                // 1. تحديث رابط التحميل (من أحدث إصدار فقط)
-                const latest = releases[0];
-                const asset = latest.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || latest.assets[0];
-                document.getElementById('download-btn').href = asset.browser_download_url;
-                document.getElementById('version-text').innerText = "الإصدار الأحدث: " + latest.tag_name;
-                
-                // 2. حساب إجمالي التحميلات من "كل" الإصدارات القديمة والجديدة
-                let grandTotal = 0;
-                releases.forEach(release => {
-                    release.assets.forEach(asset => {
-                        grandTotal += asset.download_count;
-                    });
-                });
+                if (releases && releases.length > 0) {
+                    // 1. رابط أحدث ملف
+                    const latest = releases[0];
+                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.zip') || a.name.toLowerCase().includes('.exe')) || latest.assets[0];
+                    document.getElementById('download-btn').href = asset.browser_download_url;
+                    document.getElementById('version-text').innerText = "الإصدار الأحدث: " + latest.tag_name;
 
-                // تحديث العداد بالرقم الإجمالي (الـ 23)
-                document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${grandTotal}</span> مرة حتى الآن`;
+                    // 2. حساب الإجمالي الفعلي (جمع كل الـ Assets في كل الـ Releases)
+                    let grandTotal = 0;
+                    for (const release of releases) {
+                        for (const asset of release.assets) {
+                            grandTotal += asset.download_count;
+                        }
+                    }
+
+                    // 3. عرض الرقم النهائي
+                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${grandTotal}</span> مرة حتى الآن`;
+                }
+            } catch (error) {
+                console.error("Error fetching GitHub data:", error);
+                document.getElementById('download-count').innerText = "شكراً لثقتكم بنا";
             }
-        } catch (error) {
-            console.error('GitHub API Error:', error);
-            document.getElementById('version-text').innerText = "الإصدار الحالي: v0.9.1";
-            document.getElementById('download-count').style.display = "none";
         }
-    }
 
-    getGitHubData();
-</script>
-
+        fetchGitHubStats();
+    </script>
 </body>
 </html>
