@@ -98,40 +98,45 @@
         <p style="font-size: 0.75rem; margin-top: 25px; color: #aaa;">© 2026 RouterWatch.online</p>
     </div>
 
-    <script>
-        async function getGitHubData() {
-            const user = 'moh242eg';
-            const repo = 'RouterWatch';
-            const apiUrl = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
+   <script>
+    async function getGitHubData() {
+        const user = 'moh242eg';
+        const repo = 'RouterWatch';
+        // الرابط ده بيجيب كل الإصدارات عشان نجمع التحميلات
+        const allReleasesUrl = `https://api.github.com/repos/${user}/${repo}/releases`;
 
-            try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('Release not found');
-                const data = await response.json();
+        try {
+            const response = await fetch(allReleasesUrl);
+            if (!response.ok) throw new Error('Releases not found');
+            const releases = await response.json();
 
-                if (data.assets && data.assets.length > 0) {
-                    // 1. تحديث رابط التحميل (أول ملف zip أو exe)
-                    const asset = data.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || data.assets[0];
-                    document.getElementById('download-btn').href = asset.browser_download_url;
-                    
-                    // 2. تحديث رقم الإصدار
-                    document.getElementById('version-text').innerText = "الإصدار الأحدث: " + data.tag_name;
-                    
-                    // 3. حساب إجمالي التحميلات
-                    let count = 0;
-                    data.assets.forEach(a => count += a.download_count);
-                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${count}</span> مرة حتى الآن`;
-                }
-            } catch (error) {
-                console.error('GitHub API Error:', error);
-                document.getElementById('version-text').innerText = "الإصدار الحالي: v0.9.1";
-                document.getElementById('download-count').style.display = "none";
+            if (releases.length > 0) {
+                // 1. تحديث رابط التحميل (من أحدث إصدار فقط)
+                const latest = releases[0];
+                const asset = latest.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || latest.assets[0];
+                document.getElementById('download-btn').href = asset.browser_download_url;
+                document.getElementById('version-text').innerText = "الإصدار الأحدث: " + latest.tag_name;
+                
+                // 2. حساب إجمالي التحميلات من "كل" الإصدارات القديمة والجديدة
+                let grandTotal = 0;
+                releases.forEach(release => {
+                    release.assets.forEach(asset => {
+                        grandTotal += asset.download_count;
+                    });
+                });
+
+                // تحديث العداد بالرقم الإجمالي (الـ 23)
+                document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${grandTotal}</span> مرة حتى الآن`;
             }
+        } catch (error) {
+            console.error('GitHub API Error:', error);
+            document.getElementById('version-text').innerText = "الإصدار الحالي: v0.9.1";
+            document.getElementById('download-count').style.display = "none";
         }
+    }
 
-        // تشغيل الدالة لمرة واحدة عند تحميل الصفحة
-        getGitHubData();
-    </script>
+    getGitHubData();
+</script>
 
 </body>
 </html>
