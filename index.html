@@ -24,11 +24,7 @@
             max-width: 400px;
             width: 90%;
         }
-        .logo {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
+        .logo { font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px; }
         .logo span { color: #3498db; }
         h1 { font-size: 1.5rem; margin-bottom: 20px; }
         .version-badge {
@@ -64,9 +60,9 @@
         <div class="logo">🛡️ Router<span>Watch</span></div>
         <h1>تحميل برنامج حماية الشبكة</h1>
         
-        <div id="version-text" class="version-badge">جاري جلب أحدث إصدار...</div>
+        <div id="version-text" class="version-badge">جاري التحقق من أحدث نسخة...</div>
         
-        <a href="#" id="download-btn" class="btn-download">تحميل للويندوز (64-bit)</a>
+        <a href="https://github.com/moh242eg/RouterWatch/releases" id="download-btn" class="btn-download">انقر للتحميل (Windows)</a>
         
         <div class="features">
             <p>✅ تنظيم وقت الإنترنت للأبناء</p>
@@ -77,32 +73,39 @@
     </div>
 
     <script>
-        // الكود اللي بيخلي التحميل "ديناميكي"
         async function updateDownloadLink() {
             const user = 'moh242eg';
             const repo = 'RouterWatch';
+            // الرابط ده بيجيب معلومات آخر إصدار
             const apiUrl = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
 
             try {
                 const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Network response was not ok');
+                
                 const data = await response.json();
 
                 if (data.assets && data.assets.length > 0) {
-                    const downloadUrl = data.assets[0].browser_download_url;
+                    // بياخد أول ملف بصيغة zip أو exe
+                    const asset = data.assets.find(a => a.name.endsWith('.zip') || a.name.endsWith('.exe')) || data.assets[0];
+                    const downloadUrl = asset.browser_download_url;
                     const versionName = data.tag_name;
 
-                    // تحديث الزرار
                     document.getElementById('download-btn').href = downloadUrl;
-                    // تحديث رقم الإصدار المكتوب
-                    document.getElementById('version-text').innerText = "الإصدار الأحدث: " + versionName;
+                    document.getElementById('version-text').innerText = "الإصدار الحالي: " + versionName;
+                } else {
+                    // لو مفيش ملفات مرفوعة، يوديه لصفحة الـ Releases
+                    document.getElementById('download-btn').href = `https://github.com/${user}/${repo}/releases`;
+                    document.getElementById('version-text').innerText = "اطلع على قائمة الإصدارات";
                 }
             } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('version-text').innerText = "خطأ في جلب البيانات";
+                console.error('Fetch error:', error);
+                document.getElementById('version-text').innerText = "استخدم الرابط المباشر للتحميل";
+                // رابط طوارئ لصفحة الإصدارات
+                document.getElementById('download-btn').href = `https://github.com/${user}/${repo}/releases`;
             }
         }
 
-        // تشغيل الدالة بمجرد فتح الصفحة
         updateDownloadLink();
     </script>
 </body>
