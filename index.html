@@ -3,163 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RouterWatch - تحكم ذكي وآمن</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>RouterWatch Pro - تحكم ذكي وآمن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1d72b8;
+            --primary: #1d72b8; /* الأزرق الأقوى من تصميم image_9.png */
             --secondary: #2c3e50;
-            --accent: #3498db;
-            --light-gray: #f8fafc;
+            --light-blue: #e8f3fb;
+            --success: #27ae60;
+            --bg: #031422; /* خلفية داكنة تتناسب مع الـ Palette التقني لـ image_9.png */
             --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--white); color: var(--secondary); scroll-behavior: smooth; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg); margin: 0; color: var(--white); scroll-behavior: smooth; }
 
-        /* 1. 🎯 Hero Section المطور */
-        .hero {
-            padding: 120px 10% 80px;
+        /* تجميل الـ Container العام */
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 🔝 Top Bar المطور لإبراز اسم الموقع */
+        .top-bar {
+            background: rgba(3, 20, 34, 0.9); /* خلفية داكنة شفافة */
+            width: 100%;
+            padding: 20px 0;
             text-align: center;
-            /* خلفية بتدرج لوني خفيف تعطي عمق بصري */
-            background: radial-gradient(circle at top right, #eef2f6 0%, #ffffff 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+        .site-title { font-size: 2.2rem; font-weight: 700; color: var(--white); }
+        .site-title span { color: var(--primary); }
+
+        /* 🎯 Hero Section المطور لدمج الصورة */
+        .hero {
+            padding: 160px 10% 80px; /* مسافة كبيرة للأعلى لإفساح المجال للـ Top Bar */
+            text-align: center;
+            background: radial-gradient(circle at bottom left, rgba(29, 114, 184, 0.2) 0%, rgba(3, 20, 34, 1) 100%);
+        }
+
+        /* تصميم الكارت الرئيسي الوسطي ليقارب تصميم image_9.png */
+        .main-hero-showcase {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); /* ظل داكن وعميق */
+            overflow: hidden; /* لإخفاء الحواف الحادة */
+            position: relative;
+            max-width: 900px;
+            width: 95%;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .main-hero-showcase:hover {
+            box-shadow: 0 40px 90px rgba(29, 114, 184, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* تصميم قسم الصورة المطور */
+        .showcase-header {
+            background: #f1f5f9;
+            padding: 12px 18px;
+            display: flex;
+            gap: 7px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .dot { width: 11px; height: 11px; border-radius: 50%; }
+        .red { background: #f87171; }
+        .yellow { background: #fbbf24; }
+        .green { background: #4ade80; }
+
+        .showcase-img {
+            width: 100%;
+            display: block;
+            object-fit: contain; /* للحفاظ على تفاصيل الصورة */
+        }
+
+        /* تصميم قسم الـ CTA (Call to Action) */
+        .cta-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .hero-version-badge {
+            background: rgba(29, 114, 184, 0.15);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        h2.hero-sub-title { font-size: 1.5rem; margin-bottom: 30px; color: var(--white); font-weight: 700; line-height: 1.4; }
+
+        #download-count-hero {
+            font-size: 1rem;
+            color: var(--success);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        /* تصميم زر التحميل ليقارب تصميم image_9.png (أزرق قوي وأكبر) */
+        .btn-main-download {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 22px 50px;
+            border-radius: 18px;
+            display: block;
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 30px rgba(29, 114, 184, 0.3);
             position: relative;
         }
-        .hero h1 { font-size: 3rem; color: var(--secondary); margin-bottom: 15px; }
-        .hero p.subtitle { font-size: 1.3rem; color: #64748b; margin-bottom: 35px; }
-        
-        .cta-group { display: flex; justify-content: center; gap: 20px; }
-        .btn { padding: 16px 40px; border-radius: 14px; font-weight: 700; text-decoration: none; transition: 0.3s ease; cursor: pointer; }
-        .btn-primary { background: var(--primary); color: white; border: none; box-shadow: 0 10px 25px rgba(29,114,184,0.3); }
-        .btn-outline { border: 2px solid #e2e8f0; color: var(--secondary); }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-
-        /* 2. ✅ قسم المزايا المتناسق */
-        .features { padding: 80px 10%; background: var(--white); }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .feature-card {
-            padding: 40px; border-radius: 24px; border: 1px solid #f1f5f9; background: var(--white);
-            transition: 0.4s; text-align: center;
+        .btn-main-download:hover { 
+            background: #1562a3; 
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(29, 114, 184, 0.4);
         }
-        .feature-card:hover { border-color: var(--primary); transform: scale(1.02); }
-        .icon-circle { width: 70px; height: 70px; background: #eef2f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; }
-        .learn-more { color: var(--primary); font-size: 0.9rem; font-weight: 700; text-decoration: none; margin-top: 15px; display: inline-block; }
 
-        /* 3. 📸 نظرة من الداخل مع تأثير Hover */
-        .preview { padding: 80px 10%; background: var(--light-gray); }
-        .screen-container { position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); cursor: pointer; }
-        .screen-container img { width: 100%; transition: 0.5s; display: block; }
-        .screen-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(29, 114, 184, 0.9); display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.4s; color: white; padding: 20px; text-align: center;
+        /* تصميم الـ Security Note ليقارب تصميم image_9.png */
+        .hero-security-container {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            background: #fffdf5; /* خلفية صفراء خفيفة */
+            padding: 15px;
+            border-radius: 14px;
+            border-right: 5px solid #f1c40f;
+            text-align: right;
+            line-height: 1.6;
         }
-        .screen-container:hover .screen-overlay { opacity: 1; }
-        .screen-container:hover img { transform: scale(1.1); }
 
-        /* 4. 🔒 قسم الخصوصية البارز */
-        .privacy-highlight {
-            margin: 80px 10%; padding: 50px; background: #f1f5f9; border-radius: 30px;
-            text-align: center; border: 2px solid #e2e8f0;
+        /* تصميم الـ Features Grid ليقارب تصميم image_9.png */
+        .features-grid-hero {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 50px 0;
+            text-align: center;
         }
-        .lock-icon { font-size: 4rem; display: block; margin-bottom: 20px; }
-        .privacy-highlight h2 { margin-bottom: 10px; }
+        .hero-feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            transition: all 0.2s ease;
+            color: var(--secondary);
+            border: 1px solid #eef2f6;
+        }
+        .hero-feature-card:hover {
+            transform: translateY(-2px);
+            border-color: #d1dbdf;
+        }
+        .feature-icon-hero { font-size: 2.2rem; margin-bottom: 15px; display: block; }
 
-        /* 5. 📱 Footer الاحترافي */
-        footer { background: var(--secondary); color: white; padding: 60px 10% 20px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; text-align: right; }
-        .footer-links a { display: block; color: #cbd5e1; text-decoration: none; margin-bottom: 10px; font-size: 0.9rem; }
-        .social-round { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
-        .social-round a { width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .social-round a:hover { background: var(--primary); }
+        /* تصميم قسم صورة الراوتر والدعم (Compatibility Box) */
+        .compatibility-box-hero {
+            margin-top: 50px;
+            padding: 25px;
+            border: 2px dashed #cbd5e1; /* حدود داكنة مقطوعة */
+            border-radius: 20px;
+            background: white;
+            color: var(--secondary);
+        }
+        .compatibility-box-hero img {
+            max-width: 150px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } }
+        /* تصميم الـ Footer ليقارب تصميم image_9.png */
+        .main-footer-hero {
+            margin-top: 60px;
+            font-size: 0.8rem;
+            color: rgba(148, 163, 184, 0.7);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-bar { padding: 15px 0; }
+            .site-title { font-size: 1.8rem; }
+            .hero { padding-top: 130px; }
+            .features-grid-hero {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <div class="version-badge" style="background:var(--primary); color:white; padding:5px 20px; border-radius:50px; display:inline-block; margin-bottom:20px; font-weight:bold; font-size:0.8rem;">نسخة بيتا v0.9.1</div>
-        <h1>تحكم في شبكتك بذكاء</h1>
-        <p class="subtitle">التحكم الكامل في الراوتر بدون أي إعدادات معقدة.</p>
-        <div class="cta-group">
-            <a href="#download" class="btn btn-primary">تحميل مجاني للويندوز</a>
-            <a href="#preview" class="btn btn-outline">اكتشف الواجهة</a>
+    <div class="page-wrapper">
+        <div class="top-bar">
+            <div class="site-title">RouterWatch<span> Pro</span></div>
         </div>
-    </section>
 
-    <section class="features" id="features">
-        <div class="grid-3">
-            <div class="feature-card">
-                <div class="icon-circle">⏰</div>
-                <h3>تنظيم الوقت</h3>
-                <p>جدولة مواعيد الإنترنت للأبناء بكل سهولة.</p>
-                <a href="#" class="learn-more">اعرف المزيد ←</a>
+        <div class="hero">
+            <div class="main-hero-showcase">
+                <div class="showcase-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <img src="hero_banner.png" alt="RouterWatch Pro Showcase" class="showcase-img">
             </div>
-            <div class="feature-card">
-                <div class="icon-circle">📡</div>
-                <h3>رادار الأجهزة</h3>
-                <p>كشف وطرد الأجهزة الغريبة لحظياً.</p>
-                <a href="#" class="learn-more">اعرف المزيد ←</a>
-            </div>
-            <div class="feature-card">
-                <div class="icon-circle">🔒</div>
-                <h3>ثبات دائم</h3>
-                <p>الإعدادات تحفظ في الراوتر ولا تضيع.</p>
-                <a href="#" class="learn-more">اعرف المزيد ←</a>
-            </div>
-        </div>
-    </section>
 
-    <section class="preview" id="preview">
-        <h2 style="text-align: center; margin-bottom: 50px;">نظرة من الداخل</h2>
-        <div class="grid-3">
-            <div class="screen-container">
-                <img src="scheduling.png" alt="الجدولة">
-                <div class="screen-overlay">
-                    <div>
-                        <h3>إدارة الوقت</h3>
-                        <p>واجهة بسيطة لاختيار أوقات الدراسة والنوم.</p>
-                    </div>
+            <div class="cta-section">
+                <div class="hero-version-badge">v0.9.1</div>
+                <h2 class="hero-sub-title">تحكم في شبكتك بذكاء واحمي خصوصيتك من مكان واحد</h2>
+                
+                <div id="download-count-hero">📥 انضم لـ 28 مستخدم ذكي يحمون شبكاتهم!</div>
+                
+                <a href="#" id="download-btn" class="btn-main-download">تحميل مجاني للويندوز</a>
+                
+                <div class="hero-security-container">
+                    🔐 <b>تنبيه خصوصية:</b> البرنامج يعمل محلياً بالكامل. كلمة سر الراوتر تُحفظ مشفرة على جهازك فقط ولا تخرج عنه أبداً. صنع في مصر.
                 </div>
             </div>
-            <div class="screen-container">
-                <img src="device_scan.png" alt="الرادار">
-                <div class="screen-overlay">
-                    <div>
-                        <h3>رادار كشف الأجهزة</h3>
-                        <p>تعرف على كل من يستخدم شبكتك حالياً.</p>
-                    </div>
+
+            <div class="features-grid-hero">
+                <div class="hero-feature-card">
+                    <span class="feature-icon-hero">⏰</span>
+                    <b>تنظيم وقت الأبناء</b><br>
+                    <small style="color: #64748b;">جدولة ذكية لمواعيد الإنترنت.</small>
+                </div>
+                <div class="hero-feature-card">
+                    <span class="feature-icon-hero">📡</span>
+                    <b>رادار كشف الأجهزة</b><br>
+                    <small style="color: #64748b;">كشف المتطفلين لحظياً وطردهم.</small>
+                </div>
+                <div class="hero-feature-card">
+                    <span class="feature-icon-hero">🔒</span>
+                    <b>ثبات الإعدادات</b><br>
+                    <small style="color: #64748b;">الأوامر تحفظ في الراوتر ولا تضيع.</small>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <div class="privacy-highlight">
-        <span class="lock-icon">🔒</span>
-        <h2>أمانك هو اهتمامنا الأول</h2>
-        <p>لا حاجة لتسجيل الدخول أو إنشاء حساب — كل شيء يتم مشفراً داخل جهازك فقط.</p>
+            <div class="compatibility-box-hero">
+                <b>الموديلات المدعومة بالكامل حالياً:</b><br>
+                WE ZTE H188A / H168N<br>
+                <img src="router.png" alt="Supported Router">
+                <small style="color: #64748b; display: block; margin-top: 10px;">(وجاري إضافة المزيد بناءً على طلبكم)</small>
+            </div>
+        </div>
+
+        <div class="main-footer-hero">
+            © 2026 RouterWatch.online | صنع بكل فخر لتأمين المنازل العربية
+        </div>
     </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div>
-                <h4>عن RouterWatch</h4>
-                <p style="font-size: 0.8rem; color: #cbd5e1; mt: 10px;">مشروع يهدف لتوفير أدوات حماية منزلية بسيطة وفعالة لكل العائلات العربية.</p>
-            </div>
-            <div class="footer-links">
-                <h4>روابط سريعة</h4>
-                <a href="#">سياسة الخصوصية</a>
-                <a href="#">الدعم الفني</a>
-                <a href="#">الأسئلة الشائعة</a>
-            </div>
-        </div>
-        <div class="social-round">
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="20"></a>
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="20"></a>
-        </div>
-        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">© 2026 RouterWatch.online | صنع بكل فخر</p>
-    </footer>
+    <script>
+        async function fetchGitHubStats() {
+            const user = 'moh242eg';
+            const repo = 'RouterWatch';
+            const url = `https://api.github.com/repos/${user}/${repo}/releases`;
 
+            try {
+                const response = await fetch(url);
+                const releases = await response.json();
+
+                if (releases && releases.length > 0) {
+                    const latest = releases[0];
+                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.zip') || a.name.toLowerCase().includes('.exe')) || latest.assets[0];
+                    document.getElementById('download-btn').href = asset.browser_download_url;
+                    document.getElementById('download-count-hero').innerHTML = `📥 تم تحميله <b style="color: #2c3e50; margin: 0 4px;">${grandTotal}</b> مرة ونحن في البداية!`;
+                }
+            } catch (error) {
+                console.error("Error fetching GitHub data:", error);
+                document.getElementById('download-count-hero').innerText = "جاهز للتحميل الآمن";
+            }
+        }
+
+        fetchGitHubStats();
+    </script>
 </body>
 </html>
