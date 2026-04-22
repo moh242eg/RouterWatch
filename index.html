@@ -293,5 +293,36 @@
 
         fetchGitHubStats();
     </script>
+    <script>
+    async function setupDirectDownload() {
+        const user = 'moh242eg';
+        const repo = 'RouterWatch';
+        const url = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            // البحث عن أول ملف ينتهي بـ .exe أو .zip في الإصدار الأخير
+            const asset = data.assets.find(a => a.name.endsWith('.exe') || a.name.endsWith('.zip'));
+            
+            if (asset) {
+                const downloadBtn = document.getElementById('download-btn');
+                // تحديث الرابط ليصبح رابط التحميل المباشر
+                downloadBtn.href = asset.browser_download_url;
+                
+                // إضافة خاصية تجعل المتصفح يبدأ التحميل فوراً
+                downloadBtn.setAttribute('download', '');
+            }
+        } catch (error) {
+            console.error("خطأ في جلب رابط التحميل:", error);
+            // في حالة الخطأ، نترك الرابط الافتراضي لصفحة الإصدارات
+            document.getElementById('download-btn').href = "https://github.com/moh242eg/RouterWatch/releases";
+        }
+    }
+
+    // تشغيل الدالة عند تحميل الصفحة
+    setupDirectDownload();
+</script>
 </body>
 </html>
