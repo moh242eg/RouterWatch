@@ -3,278 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RouterWatch - السيطرة الكاملة على شبكتك</title>
+    <title>RouterWatch - تحكم ذكي وآمن</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #1d72b8;
             --secondary: #2c3e50;
-            --light-bg: #f8fafc;
             --accent: #3498db;
+            --light-gray: #f8fafc;
             --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--light-bg); color: var(--secondary); line-height: 1.6; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--white); color: var(--secondary); scroll-behavior: smooth; }
 
-        /* 🔝 Header */
-        header {
-            background: var(--white);
-            padding: 15px 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.4rem; color: var(--primary); }
-        .logo img { height: 40px; }
-        nav a { text-decoration: none; color: var(--secondary); margin-right: 20px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
-        nav a:hover { color: var(--primary); }
-
-        /* 🎯 Hero Section */
+        /* 1. 🎯 Hero Section المطور */
         .hero {
-            padding: 80px 10%;
+            padding: 120px 10% 80px;
             text-align: center;
-            background: linear-gradient(180deg, #fff 0%, var(--light-bg) 100%);
+            /* خلفية بتدرج لوني خفيف تعطي عمق بصري */
+            background: radial-gradient(circle at top right, #eef2f6 0%, #ffffff 100%);
+            position: relative;
         }
-        .hero h1 { font-size: 2.8rem; margin-bottom: 20px; color: var(--secondary); }
-        .hero p { font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto 30px; }
-        .cta-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .btn { padding: 15px 35px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(29,114,184,0.2); }
-        .btn-secondary { background: #e2e8f0; color: var(--secondary); }
-        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
+        .hero h1 { font-size: 3rem; color: var(--secondary); margin-bottom: 15px; }
+        .hero p.subtitle { font-size: 1.3rem; color: #64748b; margin-bottom: 35px; }
+        
+        .cta-group { display: flex; justify-content: center; gap: 20px; }
+        .btn { padding: 16px 40px; border-radius: 14px; font-weight: 700; text-decoration: none; transition: 0.3s ease; cursor: pointer; }
+        .btn-primary { background: var(--primary); color: white; border: none; box-shadow: 0 10px 25px rgba(29,114,184,0.3); }
+        .btn-outline { border: 2px solid #e2e8f0; color: var(--secondary); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
 
-        /* ✅ Features */
-        .section-title { text-align: center; margin: 60px 0 40px; font-size: 2rem; }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 0 10%;
-        }
+        /* 2. ✅ قسم المزايا المتناسق */
+        .features { padding: 80px 10%; background: var(--white); }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #edf2f7;
-            transition: 0.3s;
+            padding: 40px; border-radius: 24px; border: 1px solid #f1f5f9; background: var(--white);
+            transition: 0.4s; text-align: center;
         }
-        .feature-card:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
-        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        .feature-card:hover { border-color: var(--primary); transform: scale(1.02); }
+        .icon-circle { width: 70px; height: 70px; background: #eef2f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem; }
+        .learn-more { color: var(--primary); font-size: 0.9rem; font-weight: 700; text-decoration: none; margin-top: 15px; display: inline-block; }
 
-        /* 📸 Screenshots */
-        .preview-section { background: white; padding: 60px 10%; margin-top: 60px; }
-        .screenshots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .screen-item { border-radius: 15px; overflow: hidden; border: 1px solid #eee; }
-        .screen-item img { width: 100%; display: block; }
-        .screen-caption { padding: 15px; text-align: center; font-weight: 600; font-size: 0.9rem; }
+        /* 3. 📸 نظرة من الداخل مع تأثير Hover */
+        .preview { padding: 80px 10%; background: var(--light-gray); }
+        .screen-container { position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); cursor: pointer; }
+        .screen-container img { width: 100%; transition: 0.5s; display: block; }
+        .screen-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(29, 114, 184, 0.9); display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: 0.4s; color: white; padding: 20px; text-align: center;
+        }
+        .screen-container:hover .screen-overlay { opacity: 1; }
+        .screen-container:hover img { transform: scale(1.1); }
 
-        /* 🔒 Trust/Privacy */
-        .privacy-box {
-            background: #fff9e6;
-            border-right: 6px solid #f1c40f;
-            padding: 30px;
-            border-radius: 15px;
-            margin: 60px 10%;
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        /* 4. 🔒 قسم الخصوصية البارز */
+        .privacy-highlight {
+            margin: 80px 10%; padding: 50px; background: #f1f5f9; border-radius: 30px;
+            text-align: center; border: 2px solid #e2e8f0;
         }
+        .lock-icon { font-size: 4rem; display: block; margin-bottom: 20px; }
+        .privacy-highlight h2 { margin-bottom: 10px; }
 
-        /* 📱 Footer */
-        footer {
-            background: var(--secondary);
-            color: white;
-            padding: 50px 10% 20px;
-            text-align: center;
-        }
-        .social-icons { margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
-        .social-icons img { width: 30px; filter: brightness(0) invert(1); transition: 0.3s; }
-        .social-icons a:hover img { transform: scale(1.2); }
-        
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; }
-            .hero h1 { font-size: 1.8rem; }
-        }
-        /* 📸 Screenshots Section v2.1 */
-        .preview-section { background: white; padding: 80px 10%; margin-top: 60px; }
-        .screenshots-grid-premium {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-            align-items: start;
-        }
-        
-        .screen-item-premium {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #edf2f7;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.06); /* ظل ناعم لتأثير الـ Mockup */
-            transition: 0.3s;
-        }
-        .screen-item-premium:hover {
-            box-shadow: 0 30px 60px rgba(29,114,184,0.1);
-            transform: translateY(-5px);
-        }
+        /* 5. 📱 Footer الاحترافي */
+        footer { background: var(--secondary); color: white; padding: 60px 10% 20px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; text-align: right; }
+        .footer-links a { display: block; color: #cbd5e1; text-decoration: none; margin-bottom: 10px; font-size: 0.9rem; }
+        .social-round { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
+        .social-round a { width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .social-round a:hover { background: var(--primary); }
 
-        /* تنسيق الـ Browser Header (النقاط الملونة) */
-        .screen-header {
-            background: #f1f5f9;
-            padding: 10px 15px;
-            display: flex;
-            gap: 6px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .red { background: #f87171; }
-        .yellow { background: #fbbf24; }
-        .green { background: #4ade80; }
-
-        .screen-item-premium img {
-            width: 100%;
-            display: block;
-            border-bottom: 1px solid #edf2f7;
-        }
-        
-        .screen-info {
-            padding: 25px;
-            text-align: right;
-        }
-        .screen-info h3 {
-            font-size: 1.3rem;
-            color: var(--secondary);
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-        .screen-info p {
-            font-size: 0.95rem;
-            color: #718096;
-            line-height: 1.6;
-        }
-        
-        @media (max-width: 900px) {
-            .screenshots-grid-premium { grid-template-columns: repeat(1, 1fr); }
-        }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">
-            <img src="logo.png" alt="Logo">
-            <span>RouterWatch</span>
-        </div>
-        <nav>
-            <a href="#features">المزايا</a>
-            <a href="#preview">صور البرنامج</a>
-            <a href="https://facebook.com/YOUR_PAGE">الدعم</a>
-            <a href="#download" style="color: var(--primary)">تحميل</a>
-        </nav>
-    </header>
-
-    <section class="hero" id="download">
-        <div class="version-badge" style="background:#e8f3fb; color:var(--primary); padding:5px 15px; border-radius:50px; display:inline-block; margin-bottom:20px; font-weight:bold;">v0.9.1</div>
+    <section class="hero">
+        <div class="version-badge" style="background:var(--primary); color:white; padding:5px 20px; border-radius:50px; display:inline-block; margin-bottom:20px; font-weight:bold; font-size:0.8rem;">نسخة بيتا v0.9.1</div>
         <h1>تحكم في شبكتك بذكاء</h1>
-        <p>برنامج محلي وآمن بالكامل لإدارة أجهزة الراوتر، تنظيم وقت الأبناء، وحماية خصوصية منزلك بضغطة زر واحدة.</p>
-        <div class="cta-btns">
-            <a href="#" class="btn btn-primary" id="download-btn">تحميل مجاني للويندوز</a>
-            <a href="#" class="btn btn-secondary">شاهد الفيديو التعريفي</a>
+        <p class="subtitle">التحكم الكامل في الراوتر بدون أي إعدادات معقدة.</p>
+        <div class="cta-group">
+            <a href="#download" class="btn btn-primary">تحميل مجاني للويندوز</a>
+            <a href="#preview" class="btn btn-outline">اكتشف الواجهة</a>
         </div>
-        <p id="download-count" style="margin-top:20px; font-size:0.9rem; color:var(--success);">📥 تم تحميله أكثر من 28 مرة ونحن نكبر بكم!</p>
     </section>
 
-    <h2 class="section-title" id="features">لماذا تختار RouterWatch؟</h2>
-    <div class="features-grid">
-        <div class="feature-card">
-            <span class="feature-icon">⏰</span>
-            <h3>تنظيم وقت الأبناء</h3>
-            <p>جدولة مواعيد الإنترنت ومنع الوصول في ساعات الدراسة أو النوم تلقائياً.</p>
+    <section class="features" id="features">
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="icon-circle">⏰</div>
+                <h3>تنظيم الوقت</h3>
+                <p>جدولة مواعيد الإنترنت للأبناء بكل سهولة.</p>
+                <a href="#" class="learn-more">اعرف المزيد ←</a>
+            </div>
+            <div class="feature-card">
+                <div class="icon-circle">📡</div>
+                <h3>رادار الأجهزة</h3>
+                <p>كشف وطرد الأجهزة الغريبة لحظياً.</p>
+                <a href="#" class="learn-more">اعرف المزيد ←</a>
+            </div>
+            <div class="feature-card">
+                <div class="icon-circle">🔒</div>
+                <h3>ثبات دائم</h3>
+                <p>الإعدادات تحفظ في الراوتر ولا تضيع.</p>
+                <a href="#" class="learn-more">اعرف المزيد ←</a>
+            </div>
         </div>
-        <div class="feature-card">
-            <span class="feature-icon">📡</span>
-            <h3>رادار كشف الأجهزة</h3>
-            <p>كشف فوري لأي جهاز غريب يحاول سرقة الواي فاي وطرده بضغطة زر.</p>
-        </div>
-        <div class="feature-card">
-            <span class="feature-icon">🔒</span>
-            <h3>ثبات الإعدادات</h3>
-            <p>الأوامر تحفظ داخل الراوتر مباشرة، مما يعني استمرار الحماية حتى والكمبيوتر مغلق.</p>
-        </div>
-    </div>
+    </section>
 
-    <div class="preview-section" id="preview">
-        <h2 class="section-title">نظرة من الداخل: السيطرة الحقيقية</h2>
-        
-        <div class="screenshots-grid-premium">
-            
-            <div class="screen-item-premium">
-                <div class="screen-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <img src="device_scan.png" alt="رادار الأجهزة">
-                <div class="screen-info">
-                    <h3>كشف فوري للمتطفلين</h3>
-                    <p>أدخل باسوورد الراوتر مرة واحدة، وشاهد كافة الأجهزة المتصلة لحظياً.</p>
+    <section class="preview" id="preview">
+        <h2 style="text-align: center; margin-bottom: 50px;">نظرة من الداخل</h2>
+        <div class="grid-3">
+            <div class="screen-container">
+                <img src="scheduling.png" alt="الجدولة">
+                <div class="screen-overlay">
+                    <div>
+                        <h3>إدارة الوقت</h3>
+                        <p>واجهة بسيطة لاختيار أوقات الدراسة والنوم.</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="screen-item-premium">
-                <div class="screen-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <img src="scheduling.png" alt="جدول مواعيد الأبناء">
-                <div class="screen-info">
-                    <h3>جدولة مواعيد الأبناء</h3>
-                    <p>حدد أوقات المذاكرة، النوم، واللعب، واترك الباقي لـ RouterWatch.</p>
+            <div class="screen-container">
+                <img src="device_scan.png" alt="الرادار">
+                <div class="screen-overlay">
+                    <div>
+                        <h3>رادار كشف الأجهزة</h3>
+                        <p>تعرف على كل من يستخدم شبكتك حالياً.</p>
+                    </div>
                 </div>
             </div>
-            
         </div>
-    </div>
+    </section>
 
-    <div class="privacy-box">
-        <span style="font-size: 2rem;">🛡️</span>
-        <div>
-            <h3 style="margin-bottom: 5px;">خصوصيتك أولوية قصوى</h3>
-            <p>البرنامج يعمل محلياً 100%. بياناتك وكلمات سر الراوتر تُشفر وتُحفظ على جهازك فقط ولا تلمس خوادمنا أبداً.</p>
-        </div>
+    <div class="privacy-highlight">
+        <span class="lock-icon">🔒</span>
+        <h2>أمانك هو اهتمامنا الأول</h2>
+        <p>لا حاجة لتسجيل الدخول أو إنشاء حساب — كل شيء يتم مشفراً داخل جهازك فقط.</p>
     </div>
 
     <footer>
-        <div class="social-icons">
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB"></a>
-            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG"></a>
+        <div class="footer-grid">
+            <div>
+                <h4>عن RouterWatch</h4>
+                <p style="font-size: 0.8rem; color: #cbd5e1; mt: 10px;">مشروع يهدف لتوفير أدوات حماية منزلية بسيطة وفعالة لكل العائلات العربية.</p>
+            </div>
+            <div class="footer-links">
+                <h4>روابط سريعة</h4>
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">الدعم الفني</a>
+                <a href="#">الأسئلة الشائعة</a>
+            </div>
         </div>
-        <p>RouterWatch.online © 2026 - صنع بكل فخر لتأمين المنازل العربية</p>
+        <div class="social-round">
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" width="20"></a>
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" width="20"></a>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">© 2026 RouterWatch.online | صنع بكل فخر</p>
     </footer>
 
-    <script>
-        // سكريبت جلب البيانات من GitHub (نفس اللي استخدمناه سابقاً)
-        async function fetchGitHubStats() {
-            const user = 'moh242eg';
-            const repo = 'RouterWatch';
-            const url = `https://api.github.com/repos/${user}/${repo}/releases`;
-            try {
-                const response = await fetch(url);
-                const releases = await response.json();
-                if (releases && releases.length > 0) {
-                    const latest = releases[0];
-                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.exe')) || latest.assets[0];
-                    document.getElementById('download-btn').href = asset.browser_download_url;
-                }
-            } catch (e) { console.log("Error loading stats"); }
-        }
-        fetchGitHubStats();
-    </script>
 </body>
 </html>
