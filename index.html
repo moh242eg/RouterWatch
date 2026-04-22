@@ -101,6 +101,66 @@
             header { flex-direction: column; gap: 15px; }
             .hero h1 { font-size: 1.8rem; }
         }
+        /* 📸 Screenshots Section v2.1 */
+        .preview-section { background: white; padding: 80px 10%; margin-top: 60px; }
+        .screenshots-grid-premium {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .screen-item-premium {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06); /* ظل ناعم لتأثير الـ Mockup */
+            transition: 0.3s;
+        }
+        .screen-item-premium:hover {
+            box-shadow: 0 30px 60px rgba(29,114,184,0.1);
+            transform: translateY(-5px);
+        }
+
+        /* تنسيق الـ Browser Header (النقاط الملونة) */
+        .screen-header {
+            background: #f1f5f9;
+            padding: 10px 15px;
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #f87171; }
+        .yellow { background: #fbbf24; }
+        .green { background: #4ade80; }
+
+        .screen-item-premium img {
+            width: 100%;
+            display: block;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        .screen-info {
+            padding: 25px;
+            text-align: right;
+        }
+        .screen-info h3 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .screen-info p {
+            font-size: 0.95rem;
+            color: #718096;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 900px) {
+            .screenshots-grid-premium { grid-template-columns: repeat(1, 1fr); }
+        }
     </style>
 </head>
 <body>
@@ -149,20 +209,36 @@
     </div>
 
     <div class="preview-section" id="preview">
-        <h2 class="section-title">نظرة من الداخل</h2>
-        <div class="screenshots-grid">
-            <div class="screen-item">
-                <img src="screen1.png" alt="لوحة التحكم">
-                <div class="screen-caption">لوحة التحكم الرئيسية</div>
+        <h2 class="section-title">نظرة من الداخل: السيطرة الحقيقية</h2>
+        
+        <div class="screenshots-grid-premium">
+            
+            <div class="screen-item-premium">
+                <div class="screen-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <img src="device_scan.png" alt="رادار الأجهزة">
+                <div class="screen-info">
+                    <h3>كشف فوري للمتطفلين</h3>
+                    <p>أدخل باسوورد الراوتر مرة واحدة، وشاهد كافة الأجهزة المتصلة لحظياً.</p>
+                </div>
             </div>
-            <div class="screen-item">
-                <img src="screen2.png" alt="الرادار">
-                <div class="screen-caption">رادار كشف المتطفلين</div>
+            
+            <div class="screen-item-premium">
+                <div class="screen-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <img src="scheduling.png" alt="جدول مواعيد الأبناء">
+                <div class="screen-info">
+                    <h3>جدولة مواعيد الأبناء</h3>
+                    <p>حدد أوقات المذاكرة، النوم، واللعب، واترك الباقي لـ RouterWatch.</p>
+                </div>
             </div>
-            <div class="screen-item">
-                <img src="screen3.png" alt="الجدولة">
-                <div class="screen-caption">إدارة وقت الأطفال</div>
-            </div>
+            
         </div>
     </div>
 
