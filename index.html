@@ -1,247 +1,209 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RouterWatch - السيطرة الكاملة على شبكتك</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #3498db;
-            --secondary: #2c3e50;
-            --success: #27ae60;
-            --bg: #f8fafc;
-        }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #333;
-            padding: 40px 0;
-        }
-        .container {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid #eef2f6;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouterWatch - السيطرة الكاملة على شبكتك</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #27ae60;
+            --bg: #f8fafc;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            padding: 20px 0;
+        }
+        .container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid #eef2f6;
+        }
+        .logo-container { margin-bottom: 20px; }
+        .logo-img { max-width: 140px; height: auto; }
         
-        /* تصميم مكان اللوجو */
-        .logo-container {
-            margin-bottom: 20px;
-        }
-        .logo-img {
-            max-width: 120px; /* يمكنك تعديل الحجم حسب اللوجو الخاص بكِ */
-            height: auto;
-        }
-
-        h1 { font-size: 1.6rem; margin-bottom: 20px; color: var(--secondary); font-weight: bold;}
-        
-        .version-badge {
-            background: #eef2f6;
-            color: var(--primary);
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        
-        #download-count {
-            font-size: 0.95rem;
-            color: var(--success);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        h1 { font-size: 1.5rem; margin-bottom: 20px; color: var(--secondary); font-weight: bold; }
+        
+        .version-badge {
+            background: #eef2f6;
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 10px;
             font-weight: bold;
-        }
+        }
+        
+        #download-count {
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
 
-        .btn-download {
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 20px 45px;
-            border-radius: 18px;
-            display: block;
-            font-weight: bold;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.25);
-        }
-        .btn-download:hover { 
-            background: #2980b9; 
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.35);
-        }
+        .btn-download {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            border-radius: 15px;
+            display: block;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.2);
+        }
+        .btn-download:hover { 
+            background: #2980b9; 
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.3);
+        }
 
-        .security-note {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            background: #fff9e6;
-            padding: 12px;
-            border-radius: 12px;
-            border-right: 5px solid #f1c40f;
+        .security-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            background: #fff9e6;
+            padding: 12px;
+            border-radius: 10px;
+            border-right: 5px solid #f1c40f;
             text-align: right;
-        }
+            line-height: 1.6;
+        }
 
-        .features {
-            text-align: right;
-            margin-top: 35px;
-            padding: 25px;
-            background: #fafafa;
-            border-radius: 18px;
+        .features {
+            text-align: right;
+            margin: 25px 0;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 15px;
             border: 1px solid #eee;
-        }
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-        
-        /* تصميم مكان صورة الراوتر */
-        .support-box {
-            margin-top: 30px;
-            padding: 20px;
-            border: 2px dashed #cbd5e1;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            color: var(--secondary);
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .support-box {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 18px;
             background: #fff;
-        }
-        .router-img {
-            max-width: 150px; /* حجم صورة الراوتر */
-            height: auto;
-            margin-top: 15px;
+        }
+        .router-img {
+            max-width: 120px;
+            margin-top: 15px;
             display: block;
             margin-left: auto;
             margin-right: auto;
-        }
+        }
 
-        footer {
-            margin-top: 40px;
-            font-size: 0.8rem;
-            color: #94a3b8;
-    <style>
-    /* ... الأكواد السابقة ... */
-    
-    .social-links {
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #eee;
-    }
-    .fb-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: #1877F2; /* لون فيسبوك الرسمي */
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 0.95rem;
-        transition: transform 0.2s;
-    }
-    .fb-link:hover {
-        transform: scale(1.05);
-        text-decoration: underline;
-    }
-    .fb-icon {
-        width: 24px;
-        height: 24px;
-    }
-</style>
+        .social-links {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .fb-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #1877F2;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .fb-icon { width: 20px; height: 20px; }
 
-
+        footer { margin-top: 30px; font-size: 0.75rem; color: #94a3b8; }
+    </style>
+</head>
 <body>
 
-    <div class="container">
+    <div class="container">
         <div class="logo-container">
             <img src="logo.png" alt="RouterWatch Logo" class="logo-img">
         </div>
         
-        <div class="version-badge" id="version-text">جاري الفحص...</div>
-        <h1>تحكم في شبكتك بذكاء واحمي خصوصيتك</h1>
-        
-        <div id="download-count">🚀 انضم إلينا الآن...</div>
-        
-        <a href="#" id="download-btn" class="btn-download">تحميل مجاني للويندوز</a>
-        
-        <div class="security-note">
-            🔐 <b>تنبيه خصوصية:</b> البرنامج يعمل محلياً بالكامل. كلمة سر الراوتر تُحفظ مشفرة على جهازك فقط ولا تخرج عنه أبداً.
-        </div>
+        <div class="version-badge" id="version-text">v0.9.1</div>
+        <h1>تحكم في شبكتك بذكاء</h1>
+        
+        <div id="download-count">📥 جاري تحديث الإحصائيات...</div>
+        
+        <a href="#" id="download-btn" class="btn-download">تحميل مجاني للويندوز</a>
+        
+        <div class="security-note">
+            🔐 <b>تنبيه خصوصية:</b> البرنامج يعمل محلياً بالكامل. كلمة سر الراوتر تُحفظ مشفرة على جهازك فقط.
+        </div>
 
-        <div class="features">
-            <div class="feature-item">✅ <b>تنظيم وقت الأبناء:</b> جدولة ذكية لمواعيد الإنترنت.</div>
-            <div class="feature-item">✅ <b>رادار الشبكة: </b> كشف وطرد أي أجهزة غريبة فوراً.</div>
-            <div class="feature-item">✅ <b>ثبات الإعدادات:</b> الأوامر تُحفظ في الراوتر حتى بعد قفل الكمبيوتر.</div>
-        </div>
+        <div class="features">
+            <div class="feature-item">✅ <b>تنظيم وقت الأبناء</b></div>
+            <div class="feature-item">✅ <b>رادار كشف الأجهزة</b></div>
+            <div class="feature-item">✅ <b>ثبات الإعدادات في الراوتر</b></div>
+        </div>
 
-        <div class="support-box">
-            <b>الموديلات المدعومة بالكامل حالياً:</b><br>
-            WE ZTE H188A / H168N
-            <br>
-                        <img src="router.png" alt="Supported Router" class="router-img">
-            <small style="color: #64748b; display: block; margin-top: 10px;">(وجاري إضافة المزيد بناءً على طلبكم)</small>
-        </div>
+        <div class="support-box">
+            <small>الموديلات المدعومة حالياً:</small><br>
+            <b>WE ZTE H188A / H168N</b>
+            <img src="router.png" alt="Supported Router" class="router-img">
+        </div>
 
-       <div class="social-links">
-    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 10px;">تابعونا لتحديثات الموديلات الجديدة:</p>
-    <a href="https://www.facebook.com/YOUR_PAGE_LINK" target="_blank" class="fb-link">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" class="fb-icon">
-        صفحتنا على فيسبوك
-    </a>
-</div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/YOUR_PAGE_LINK" target="_blank" class="fb-link">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook" class="fb-icon">
+                تابعونا على فيسبوك
+            </a>
+        </div>
 
-<footer>
-    © 2026 RouterWatch.online | صنع بكل فخر لتأمين المنازل العربية
-</footer>
-</head>
-    </div>
+        <footer>
+            © 2026 RouterWatch.online
+        </footer>
+    </div>
 
-    <script>
-        async function fetchGitHubStats() {
-            const user = 'moh242eg';
-            const repo = 'RouterWatch';
-            const url = `https://api.github.com/repos/${user}/${repo}/releases`;
-
-            try {
-                const response = await fetch(url);
-                const releases = await response.json();
-
-                if (releases && releases.length > 0) {
-                    const latest = releases[0];
-                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.zip') || a.name.toLowerCase().includes('.exe')) || latest.assets[0];
-                    document.getElementById('download-btn').href = asset.browser_download_url;
-                    document.getElementById('version-text').innerText = "v" + latest.tag_name;
-
-                    let grandTotal = 0;
-                    for (const release of releases) {
-                        for (const asset of release.assets) {
-                            grandTotal += asset.download_count;
-                        }
-                    }
-
-                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <b style="color: #2c3e50; margin: 0 4px;">${grandTotal}</b> مرة ونحن في البداية!`;
-                }
-            } catch (error) {
-                console.error("Error fetching GitHub data:", error);
-                document.getElementById('download-count').innerText = "نتمنى لكم تجربة آمنة مع RouterWatch";
-            }
-        }
-
-        fetchGitHubStats();
-    </script>
+    <script>
+        async function fetchGitHubStats() {
+            const user = 'moh242eg';
+            const repo = 'RouterWatch';
+            const url = `https://api.github.com/repos/${user}/${repo}/releases`;
+            try {
+                const response = await fetch(url);
+                const releases = await response.json();
+                if (releases && releases.length > 0) {
+                    const latest = releases[0];
+                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.zip') || a.name.toLowerCase().includes('.exe')) || latest.assets[0];
+                    document.getElementById('download-btn').href = asset.browser_download_url;
+                    document.getElementById('version-text').innerText = "v" + latest.tag_name;
+                    let grandTotal = 0;
+                    for (const release of releases) {
+                        for (const asset of release.assets) {
+                            grandTotal += asset.download_count;
+                        }
+                    }
+                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <span style="color:#2c3e50">${grandTotal}</span> مرة حتى الآن`;
+                }
+            } catch (e) {
+                document.getElementById('download-count').innerText = "جاهز للتحميل الآمن";
+            }
+        }
+        fetchGitHubStats();
+    </script>
 </body>
 </html>
