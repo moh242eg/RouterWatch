@@ -164,57 +164,56 @@
         </div>
     </div>
 
-    <script>
-    async function setupGlobalStats() {
+   <script>
+    async function calculateAllDownloads() {
         const user = 'moh242eg';
         const repo = 'RouterWatch';
-        // جلب قائمة بكل الإصدارات وليس الأخير فقط
+        // طلب كافة الإصدارات (Releases) بدون استثناء
         const url = `https://api.github.com/repos/${user}/${repo}/releases`;
 
         try {
             const response = await fetch(url);
-            const releases = await response.json();
+            const allReleases = await response.json();
             
-            let totalDownloads = 0;
-            let latestAssetUrl = "#";
+            let grandTotal = 0;
+            let latestUrl = "";
 
-            // 1. حساب مجموع التحميلات من كل الإصدارات
-            releases.forEach(release => {
-                release.assets.forEach(asset => {
-                    totalDownloads += asset.download_count;
-                });
+            // حلقة تكرارية تمر على كل Release وتجمع تحميلات كل ملفاته
+            allReleases.forEach((release, index) => {
+                if (release.assets && release.assets.length > 0) {
+                    release.assets.forEach(asset => {
+                        grandTotal += asset.download_count;
+                        
+                        // الاحتفاظ برابط أحدث ملف (أول ملف في أول إصدار) للتحميل المباشر
+                        if (index === 0 && (asset.name.endsWith('.exe') || asset.name.endsWith('.zip'))) {
+                            latestUrl = asset.browser_download_url;
+                        }
+                    });
+                }
             });
 
-            // 2. تحديد رابط التحميل لأحدث إصدار (أول واحد في المصفوفة)
-            if (releases.length > 0 && releases[0].assets.length > 0) {
-                const latestAsset = releases[0].assets.find(a => 
-                    a.name.toLowerCase().endsWith('.exe') || 
-                    a.name.toLowerCase().endsWith('.zip')
-                );
-                if (latestAsset) {
-                    latestAssetUrl = latestAsset.browser_download_url;
-                }
-            }
-
-            // 3. تحديث الواجهة
-            const btn = document.getElementById('download-btn');
+            // تحديث الواجهة بالرقم الإجمالي (الـ 28+)
             const countElement = document.getElementById('download-count-hero');
+            const downloadBtn = document.getElementById('download-btn');
 
-            if (btn) btn.href = latestAssetUrl;
-            
             if (countElement) {
-                // عرض الرقم الإجمالي
-                countElement.innerHTML = `📥 انضم لـ <b style="color: #27ae60; font-size: 1.2rem;">${totalDownloads}</b> مستخدم يحمون شبكاتهم الآن!`;
+                countElement.innerHTML = `📥 انضم لـ <b style="color: #27ae60; font-size: 1.25rem;">${grandTotal}</b> مستخدم يحمون شبكاتهم الآن!`;
             }
 
-        } catch (e) {
-            console.error("Error fetching global stats:", e);
-            document.getElementById('download-count-hero').innerText = "جاهز للتحميل الآمن";
+            if (downloadBtn && latestUrl) {
+                downloadBtn.href = latestUrl;
+            }
+
+            console.log("تم حساب إجمالي التحميلات بنجاح: " + grandTotal);
+
+        } catch (error) {
+            console.error("حدث خطأ أثناء جلب البيانات:", error);
+            document.getElementById('download-count-hero').innerText = "انضم لمجتمع RouterWatch الآن";
         }
     }
 
-    // التنفيذ عند تحميل الصفحة
-    window.onload = setupGlobalStats;
+    // تشغيل الدالة فور تحميل الصفحة
+    window.addEventListener('load', calculateAllDownloads);
 </script>
 
 </body>
