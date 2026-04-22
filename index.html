@@ -165,42 +165,57 @@
     </div>
 
     <script>
-    async function setupDownload() {
+    async function setupGlobalStats() {
         const user = 'moh242eg';
         const repo = 'RouterWatch';
-        // جلب بيانات آخر إصدار فقط
-        const url = `https://api.github.com/repos/${user}/${repo}/releases/latest`;
+        // جلب قائمة بكل الإصدارات وليس الأخير فقط
+        const url = `https://api.github.com/repos/${user}/${repo}/releases`;
 
         try {
             const response = await fetch(url);
-            const data = await response.json();
+            const releases = await response.json();
             
-            // البحث عن الملف الذي ينتهي بـ .exe أو .zip
-            const asset = data.assets.find(a => a.name.toLowerCase().endsWith('.exe') || a.name.toLowerCase().endsWith('.zip'));
-            
-            if (asset) {
-                const btn = document.getElementById('download-btn');
-                const countElement = document.getElementById('download-count-hero');
+            let totalDownloads = 0;
+            let latestAssetUrl = "#";
 
-                // 1. تحديث رابط الزر برابط التحميل المباشر فوراً
-                btn.href = asset.browser_download_url;
-                
-                // 2. تحديث عداد التحميلات الحقيقي من GitHub
-                // ملاحظة: الـ download_count هو عدد المرات التي تم فيها تحميل هذا الملف تحديداً
-                const count = asset.download_count;
-                countElement.innerHTML = `📥 تم تحميل النسخة الأخيرة <b style="color: #27ae60;">${count}</b> مرة مباشرة!`;
-                
-                console.log("Direct Download Link Ready: " + asset.browser_download_url);
+            // 1. حساب مجموع التحميلات من كل الإصدارات
+            releases.forEach(release => {
+                release.assets.forEach(asset => {
+                    totalDownloads += asset.download_count;
+                });
+            });
+
+            // 2. تحديد رابط التحميل لأحدث إصدار (أول واحد في المصفوفة)
+            if (releases.length > 0 && releases[0].assets.length > 0) {
+                const latestAsset = releases[0].assets.find(a => 
+                    a.name.toLowerCase().endsWith('.exe') || 
+                    a.name.toLowerCase().endsWith('.zip')
+                );
+                if (latestAsset) {
+                    latestAssetUrl = latestAsset.browser_download_url;
+                }
             }
+
+            // 3. تحديث الواجهة
+            const btn = document.getElementById('download-btn');
+            const countElement = document.getElementById('download-count-hero');
+
+            if (btn) btn.href = latestAssetUrl;
+            
+            if (countElement) {
+                // عرض الرقم الإجمالي
+                countElement.innerHTML = `📥 انضم لـ <b style="color: #27ae60; font-size: 1.2rem;">${totalDownloads}</b> مستخدم يحمون شبكاتهم الآن!`;
+            }
+
         } catch (e) {
-            console.error("GitHub API Error:", e);
-            // في حالة الفشل نترك الرابط كاحتياط لصفحة الـ releases
-            document.getElementById('download-count-hero').innerText = "جاهز للتحميل الآن";
+            console.error("Error fetching global stats:", e);
+            document.getElementById('download-count-hero').innerText = "جاهز للتحميل الآمن";
         }
     }
 
-    // تنفيذ الدالة بمجرد تحميل الصفحة
-    window.onload = setupDownload;
+    // التنفيذ عند تحميل الصفحة
+    window.onload = setupGlobalStats;
 </script>
+
 </body>
 </html>
