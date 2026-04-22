@@ -7,308 +7,197 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1d72b8; /* الأزرق الأقوى من تصميم image_7.png */
+            --primary: #1d72b8;
             --secondary: #2c3e50;
-            --light-blue: #e8f3fb;
-            --success: #27ae60;
-            --bg: #fdfdfd; /* خلفية فاتحة وأكثر نقاء */
-            --border: #edf2f7;
-        }
-        
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            color: var(--secondary);
-            padding: 0;
-            overflow-x: hidden;
+            --light-bg: #f8fafc;
+            --accent: #3498db;
+            --white: #ffffff;
         }
 
-        /* تنسيق الـ Container الرئيسي ليكون بملء الصفحة */
-        .wrapper {
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--light-bg); color: var(--secondary); line-height: 1.6; }
+
+        /* 🔝 Header */
+        header {
+            background: var(--white);
+            padding: 15px 10%;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.4rem; color: var(--primary); }
+        .logo img { height: 40px; }
+        nav a { text-decoration: none; color: var(--secondary); margin-right: 20px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: var(--primary); }
 
-        /* تصميم الكارت الرئيسي الوسطي (البطاقة) ليقارب تصميم image_7.png */
-        .main-card {
-            background: white;
-            padding: 4rem 2rem;
-            border-radius: 32px;
-            box-shadow: 0 25px 60px rgba(29, 114, 184, 0.05); /* ظل ناعم ولون أزرق خفيف */
+        /* 🎯 Hero Section */
+        .hero {
+            padding: 80px 10%;
             text-align: center;
-            max-width: 580px;
-            width: 90%;
-            margin: 60px auto; /* مسافة كبيرة من الأعلى والأسفل */
-            border: 1px solid var(--border);
-            position: relative;
+            background: linear-gradient(180deg, #fff 0%, var(--light-bg) 100%);
         }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 20px; color: var(--secondary); }
+        .hero p { font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto 30px; }
+        .cta-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn { padding: 15px 35px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(29,114,184,0.2); }
+        .btn-secondary { background: #e2e8f0; color: var(--secondary); }
+        .btn:hover { transform: translateY(-3px); opacity: 0.9; }
 
-        /* تصميم اللوجو في الأعلى */
-        .logo-container {
-            margin-bottom: 25px;
-        }
-        .logo-img {
-            max-width: 160px; /* حجم لوجو أكبر واحترافي */
-            height: auto;
-        }
-        
-        /* تصميم الـ Version Badge (التاج) */
-        .version-tag {
-            background: var(--light-blue);
-            color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            display: inline-block;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        /* تصميم العنوان الرئيسي ليقارب تصميم image_7.png */
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            color: var(--secondary);
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        /* تصميم نص العداد */
-        #download-count {
-            font-size: 1rem;
-            color: var(--success);
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* تصميم زر التحميل ليقارب تصميم image_7.png (أزرق أقوى وأكبر) */
-        .btn-main-download {
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 24px 50px; /* حجم زر أكبر */
-            border-radius: 20px; /* حواف أكثر انحناءً */
-            display: block;
-            font-weight: 700;
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 30px rgba(29, 114, 184, 0.2); /* ظل أزرق قوي */
-            position: relative;
-        }
-        .btn-main-download:hover { 
-            background: #1562a3; 
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(29, 114, 184, 0.3);
-        }
-
-        /* تصميم الـ Security Note ليقارب تصميم image_7.png (في كادر منفصل) */
-        .security-container {
-            background: #fffdf5; /* خلفية صفراء خفيفة جداً */
-            padding: 16px;
-            border-radius: 16px;
-            margin: 25px 0;
-            border: 1px dashed #f6e05e; /* حدود صفراء مقطوعة */
-            font-size: 0.9rem;
-            color: #8c7e10;
-            text-align: right;
-            line-height: 1.6;
-        }
-
-        /* تصميم المميزات (Features) ليقارب تصميم image_7.png (في مربعات شبكية منفصلة) */
+        /* ✅ Features */
+        .section-title { text-align: center; margin: 60px 0 40px; font-size: 2rem; }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 أعمدة */
-            gap: 15px;
-            margin: 40px 0;
-            text-align: center;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0 10%;
         }
         .feature-card {
-            background: #fafafa;
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 16px;
-            transition: all 0.2s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-2px);
-            border-color: #d1dbdf;
-        }
-        .feature-icon {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .feature-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 3px;
-            display: block;
-        }
-        .feature-desc {
-            font-size: 0.8rem;
-            color: #718096;
-        }
-        
-        /* تصميم قسم صورة الراوتر والدعم (في مربع شيكي مقطوع) */
-        .compatibility-box {
-            margin-top: 40px;
-            padding: 25px;
-            border: 2px dashed #a0aec0; /* حدود مقطوعة سميكة */
+            background: white;
+            padding: 30px;
             border-radius: 20px;
-            background: #fff;
+            text-align: center;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
         }
-        .support-text {
-            font-size: 0.9rem;
-            color: var(--secondary);
-            font-weight: 600;
-        }
-        .supported-models {
-            display: block;
-            color: var(--primary);
-            margin-top: 5px;
-            font-weight: 700;
-        }
-        .router-img-showcase {
-            max-width: 140px; /* حجم صورة راوتر متوسط */
-            margin-top: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .feature-card:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-        /* تصميم قسم الفيسبوك */
-        .facebook-section {
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 1px solid #eef2f6;
-        }
-        .facebook-link-btn {
-            display: inline-flex;
+        /* 📸 Screenshots */
+        .preview-section { background: white; padding: 60px 10%; margin-top: 60px; }
+        .screenshots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .screen-item { border-radius: 15px; overflow: hidden; border: 1px solid #eee; }
+        .screen-item img { width: 100%; display: block; }
+        .screen-caption { padding: 15px; text-align: center; font-weight: 600; font-size: 0.9rem; }
+
+        /* 🔒 Trust/Privacy */
+        .privacy-box {
+            background: #fff9e6;
+            border-right: 6px solid #f1c40f;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 60px 10%;
+            display: flex;
             align-items: center;
-            gap: 8px;
-            color: #1877F2;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-        .facebook-link-btn:hover {
-            transform: scale(1.03);
-            text-decoration: underline;
-        }
-        .facebook-icon-img { width: 22px; height: 22px; }
-
-        /* تصميم قسم الـ Footer ليقارب تصميم image_7.png */
-        .main-footer {
-            margin-top: 50px;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            padding-bottom: 20px;
+            gap: 20px;
         }
 
-        /* Responsive Design */
-        @media (max-width: 580px) {
-            .features-grid {
-                grid-template-columns: repeat(1, 1fr); /* عمود واحد على الموبايل */
-            }
-            .btn-main-download {
-                font-size: 1.2rem;
-                padding: 20px 30px;
-            }
+        /* 📱 Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 50px 10% 20px;
+            text-align: center;
+        }
+        .social-icons { margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; }
+        .social-icons img { width: 30px; filter: brightness(0) invert(1); transition: 0.3s; }
+        .social-icons a:hover img { transform: scale(1.2); }
+        
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <div class="main-card">
-            <div class="logo-container">
-                <img src="logo.png" alt="RouterWatch Logo" class="logo-img">
-            </div>
-            
-            <div class="version-tag" id="version-text">v0.9.1</div>
-            <h1>تحكم في شبكتك بذكاء واحمي خصوصيتك من مكان واحد</h1>
-            
-            <div id="download-count">📥 انضم لـ 28 مستخدم ذكي يحمون شبكاتهم!</div>
-            
-            <a href="#" id="download-btn" class="btn-main-download">تحميل مجاني للويندوز</a>
-            
-            <div class="security-container">
-                🔐 <b>تنبيه خصوصية:</b> البرنامج يعمل محلياً بالكامل. كلمة سر الراوتر تُحفظ مشفرة على جهازك فقط ولا تخرج عنه أبداً.
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <span class="feature-icon">⏰</span>
-                    <span class="feature-title">تنظيم وقت الأبناء</span>
-                    <span class="feature-desc">جدولة ذكية لمواعيد الإنترنت</span>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">📡</span>
-                    <span class="feature-title">رادار الشبكة</span>
-                    <span class="feature-desc">كشف الأجهزة الغريبة المتصلة</span>
-                </div>
-                <div class="feature-card">
-                    <span class="feature-icon">💾</span>
-                    <span class="feature-title">ثبات الإعدادات</span>
-                    <span class="feature-desc">الأوامر تُحفظ في الراوتر نفسه</span>
-                </div>
-            </div>
-
-            <div class="compatibility-box">
-                <span class="support-text">الموديلات المدعومة بالكامل حالياً:</span><br>
-                <span class="supported-models">WE ZTE H188A / H168N</span>
-                <img src="router.png" alt="Supported Router" class="router-img-showcase">
-                <small style="color: #64748b; display: block; margin-top: 10px;">(وجاري إضافة المزيد بناءً على طلبكم)</small>
-            </div>
-
-            <div class="facebook-section">
-                <a href="https://www.facebook.com/YOUR_PAGE_LINK" target="_blank" class="facebook-link-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook icon" class="facebook-icon-img">
-                    تابعونا لتحديثات الموديلات الجديدة
-                </a>
-            </div>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <span>RouterWatch</span>
         </div>
+        <nav>
+            <a href="#features">المزايا</a>
+            <a href="#preview">صور البرنامج</a>
+            <a href="https://facebook.com/YOUR_PAGE">الدعم</a>
+            <a href="#download" style="color: var(--primary)">تحميل</a>
+        </nav>
+    </header>
 
-        <div class="main-footer">
-            © 2026 RouterWatch.online | صنع بكل فخر لتأمين المنازل العربية
+    <section class="hero" id="download">
+        <div class="version-badge" style="background:#e8f3fb; color:var(--primary); padding:5px 15px; border-radius:50px; display:inline-block; margin-bottom:20px; font-weight:bold;">v0.9.1</div>
+        <h1>تحكم في شبكتك بذكاء</h1>
+        <p>برنامج محلي وآمن بالكامل لإدارة أجهزة الراوتر، تنظيم وقت الأبناء، وحماية خصوصية منزلك بضغطة زر واحدة.</p>
+        <div class="cta-btns">
+            <a href="#" class="btn btn-primary" id="download-btn">تحميل مجاني للويندوز</a>
+            <a href="#" class="btn btn-secondary">شاهد الفيديو التعريفي</a>
+        </div>
+        <p id="download-count" style="margin-top:20px; font-size:0.9rem; color:var(--success);">📥 تم تحميله أكثر من 28 مرة ونحن نكبر بكم!</p>
+    </section>
+
+    <h2 class="section-title" id="features">لماذا تختار RouterWatch؟</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">⏰</span>
+            <h3>تنظيم وقت الأبناء</h3>
+            <p>جدولة مواعيد الإنترنت ومنع الوصول في ساعات الدراسة أو النوم تلقائياً.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">📡</span>
+            <h3>رادار كشف الأجهزة</h3>
+            <p>كشف فوري لأي جهاز غريب يحاول سرقة الواي فاي وطرده بضغطة زر.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🔒</span>
+            <h3>ثبات الإعدادات</h3>
+            <p>الأوامر تحفظ داخل الراوتر مباشرة، مما يعني استمرار الحماية حتى والكمبيوتر مغلق.</p>
         </div>
     </div>
 
+    <div class="preview-section" id="preview">
+        <h2 class="section-title">نظرة من الداخل</h2>
+        <div class="screenshots-grid">
+            <div class="screen-item">
+                <img src="screen1.png" alt="لوحة التحكم">
+                <div class="screen-caption">لوحة التحكم الرئيسية</div>
+            </div>
+            <div class="screen-item">
+                <img src="screen2.png" alt="الرادار">
+                <div class="screen-caption">رادار كشف المتطفلين</div>
+            </div>
+            <div class="screen-item">
+                <img src="screen3.png" alt="الجدولة">
+                <div class="screen-caption">إدارة وقت الأطفال</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="privacy-box">
+        <span style="font-size: 2rem;">🛡️</span>
+        <div>
+            <h3 style="margin-bottom: 5px;">خصوصيتك أولوية قصوى</h3>
+            <p>البرنامج يعمل محلياً 100%. بياناتك وكلمات سر الراوتر تُشفر وتُحفظ على جهازك فقط ولا تلمس خوادمنا أبداً.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB"></a>
+            <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG"></a>
+        </div>
+        <p>RouterWatch.online © 2026 - صنع بكل فخر لتأمين المنازل العربية</p>
+    </footer>
+
     <script>
+        // سكريبت جلب البيانات من GitHub (نفس اللي استخدمناه سابقاً)
         async function fetchGitHubStats() {
             const user = 'moh242eg';
             const repo = 'RouterWatch';
             const url = `https://api.github.com/repos/${user}/${repo}/releases`;
-
             try {
                 const response = await fetch(url);
                 const releases = await response.json();
-
                 if (releases && releases.length > 0) {
                     const latest = releases[0];
-                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.zip') || a.name.toLowerCase().includes('.exe')) || latest.assets[0];
+                    const asset = latest.assets.find(a => a.name.toLowerCase().includes('.exe')) || latest.assets[0];
                     document.getElementById('download-btn').href = asset.browser_download_url;
-                    document.getElementById('version-text').innerText = "v" + latest.tag_name;
-
-                    let grandTotal = 0;
-                    for (const release of releases) {
-                        for (const asset of release.assets) {
-                            grandTotal += asset.download_count;
-                        }
-                    }
-
-                    document.getElementById('download-count').innerHTML = `📥 تم تحميله <b style="color: #2c3e50; margin: 0 4px;">${grandTotal}</b> مرة ونحن في البداية!`;
                 }
-            } catch (error) {
-                console.error("Error fetching GitHub data:", error);
-                document.getElementById('download-count').innerText = "جاهز للتحميل الآمن";
-            }
+            } catch (e) { console.log("Error loading stats"); }
         }
-
         fetchGitHubStats();
     </script>
 </body>
